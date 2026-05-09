@@ -1,0 +1,108 @@
+function App() {
+  const produkter = [
+    {
+      id: 1,
+      namn: "T-shirt",
+      pris: 299,
+      bild:
+        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
+    },
+    {
+      id: 2,
+      namn: "Hoodie",
+      pris: 599,
+      bild:
+        "https://images.unsplash.com/photo-1503341504253-dff4815485f1",
+    },
+    {
+      id: 3,
+      namn: "Keps",
+      pris: 199,
+      bild:
+        "https://images.unsplash.com/photo-1521369909029-2afed882baee",
+    },
+  ];
+
+  return (
+    <div style={{ fontFamily: "Arial", padding: "20px" }}>
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          background: "#111",
+          color: "white",
+          padding: "15px",
+          borderRadius: "10px",
+        }}
+      >
+        <h2>Min Webbshop</h2>
+
+        <div style={{ display: "flex", gap: "20px" }}>
+          <a href="#" style={{ color: "white" }}>
+            Produkter
+          </a>
+
+          <a href="#" style={{ color: "white" }}>
+            Kundcenter
+          </a>
+
+          <a href="#" style={{ color: "white" }}>
+            Varukorg
+          </a>
+        </div>
+      </nav>
+
+      <h1 style={{ marginTop: "40px" }}>Våra produkter</h1>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "20px",
+          marginTop: "20px",
+        }}
+      >
+        {produkter.map((produkt) => (
+          <div
+            key={produkt.id}
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: "12px",
+              padding: "15px",
+            }}
+          >
+            <img
+              src={produkt.bild}
+              alt={produkt.namn}
+              style={{
+                width: "100%",
+                height: "250px",
+                objectFit: "cover",
+                borderRadius: "10px",
+              }}
+            />
+
+            <h2>{produkt.namn}</h2>
+
+            <p>{produkt.pris} kr</p>
+
+            <button
+              style={{
+                background: "black",
+                color: "white",
+                border: "none",
+                padding: "10px 20px",
+                borderRadius: "8px",
+                cursor: "pointer",
+              }}
+            >
+              Lägg i varukorg
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default App;
