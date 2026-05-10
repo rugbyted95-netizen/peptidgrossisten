@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "start": "node SERVER/server.js",
     "heroku-postbuild": "cd CLIENT && npm install && npm run build"
