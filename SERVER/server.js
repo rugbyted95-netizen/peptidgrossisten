@@ -1,10 +1,11 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
-import Product from "./models/Product.js";
-import Cart from "./models/Cart.js";
+// SERVER/server.js
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
+
+const Product = require("./models/Product");
+const Cart = require("./models/Cart");
 
 dotenv.config();
 
