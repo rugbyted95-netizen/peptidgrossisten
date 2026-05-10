@@ -1,21 +1,22 @@
 {
-  "name": "server",
+  "name": "webbshopen",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-  "start": "node SERVER/server.js",
-  "heroku-postbuild": "cd CLIENT && npm install && npm run build"
-}
+    "start": "node SERVER/server.js",
+    "heroku-postbuild": "cd CLIENT && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rugbyted95-netizen/peptidgrossisten.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "mongodb": "^7.2.0",
-    "mongoose": "^9.6.2"
-  }
+  "bugs": {
+    "url": "https://github.com/rugbyted95-netizen/peptidgrossisten/issues"
+  },
+  "homepage": "https://github.com/rugbyted95-netizen/peptidgrossisten#readme"
 }
