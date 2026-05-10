@@ -1,43 +1,49 @@
-// server/server.js
-const express = require("express");
-const cors = require("cors");
-const Product = require("./models/Product");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+
+import Product from "./models/Product.js";
+import Cart from "./models/Cart.js";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Hämta alla produkter
-app.get("/products", async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected!"))
+  .catch(err => console.error("MongoDB connection error:", err));
+
+app.get("/", (req, res) => {
+  res.send("Server is running!");
 });
 
-// Lägg till ny produkt
-app.post("/products", async (req, res) => {
-  try {
-    const { name, price, image } = req.body;
-    const newProduct = new Product({ name, price, image });
-    await newProduct.save();
-    res.json(newProduct);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
+// Hämta produkter
+app.get("/api/products", async (req, res) => {
+  const products = await Product.find();
+  res.json(products);
 });
 
-// Radera produkt (om du vill ha adminfunktion)
-app.delete("/products/:id", async (req, res) => {
-  try {
-    const deleted = await Product.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ message: "Product not found" });
-    res.json({ message: "Product deleted" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+// Lägg till i kundvagn
+app.post("/api/cart", async (req, res) => {
+  const item = new Cart(req.body);
+  await item.save();
+  res.json({ message: "Added to cart" });
 });
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+// Hämta kundvagn
+app.get("/api/cart", async (req, res) => {
+  const cart = await Cart.find();
+  res.json(cart);
+});
+
+// Ta bort från kundvagn
+app.delete("/api/cart/:id", async (req, res) => {
+  await Cart.findByIdAndDelete(req.params.id);
+  res.json({ message: "Removed" });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
