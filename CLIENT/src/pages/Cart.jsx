@@ -1,25 +1,26 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
-function Cart() {
+export default function Cart() {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useContext(CartContext);
 
   return (
     <div style={{ padding: "40px" }}>
       <h1>Kundvagn</h1>
+
       {cart.length === 0 && <p>Kundvagnen är tom</p>}
 
-      {cart.map((item) => (
-        <div key={item.id} style={{ marginBottom: "20px" }}>
+      {cart.map(item => (
+        <div key={item._id} style={{ marginBottom: "20px", borderBottom: "1px solid #ccc" }}>
           <h2>{item.name}</h2>
           <p>{item.price} kr</p>
-          <input
-            type="number"
-            min="1"
-            value={item.quantity}
-            onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
-          />
-          <button onClick={() => removeFromCart(item.id)}>Ta bort</button>
+          <p>
+            Antal: 
+            <button onClick={() => updateQuantity(item._id, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
+            {item.quantity}
+            <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>+</button>
+          </p>
+          <button onClick={() => removeFromCart(item._id)}>Ta bort</button>
         </div>
       ))}
 
@@ -27,5 +28,3 @@ function Cart() {
     </div>
   );
 }
-
-export default Cart;

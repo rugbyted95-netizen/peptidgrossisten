@@ -1,14 +1,17 @@
-// server/db.js
-const mongoose = require("mongoose");
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 
-// Din MongoDB-anslutningssträng från Atlas
-const uri = "mongodb+srv://lowerasmussen_db_user:u9MjwuWdicgzkCRS@cluster0.vare4q3.mongodb.net/?appName=Cluster0";
+dotenv.config();
 
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB connected successfully"))
-.catch(err => console.error("MongoDB connection error:", err));
+const client = new MongoClient(process.env.MONGO_URI);
+const dbName = "webshopDB";
 
-module.exports = mongoose;
+export async function connectDB() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB!");
+    return client.db(dbName);
+  } catch (err) {
+    console.error(err);
+  }
+}
